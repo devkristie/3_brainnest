@@ -1,5 +1,7 @@
 :root {
     --background: #FFF;
+    --calc-background: #F00;
+    --calc-window-bg: blue;
 }
 * {
     margin: 0;
@@ -8,4 +10,37 @@
 }
 body {
     overflow-x: hidden;
+}
+h1 {
+    padding: 20px 0;
+    text-align: center;
+}
+.calculator-container {
+    margin-left: auto;
+    margin-right: auto;
+    /*width: 540px;*/
+    max-width: 540px;
+    padding: 20px 0;
+    background-color: var(--calc-background);
+}
+.calculator-window {
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    height: 100px;
+    background-color: var(--calc-window-bg);    
+}
+.calculator-buttons {
+    margin-left: auto;
+    margin-right: auto;    
+    display: grid;
+    grid: 50px / auto auto auto auto;
+    max-width: 500px;
+}
+button {
+    padding: 20px;
+}
+footer {
+    padding: 20px 0;
+    text-align: center;
 }
