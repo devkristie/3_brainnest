@@ -1,8 +1,21 @@
 // Created DOM for elements
+
+// This is how the variables connect to the HTML element.
+
 const screen = document.querySelector('.inner-screen .main'); // Grabs the div with a class of inner-screen and main
 const screenLog = document.querySelector('.screenlog'); // Prints previous equation
+
 const clear = document.querySelector('.clear');
 const deleteNum = document.querySelector('.delete');
+
+const addOperator = document.querySelector('.plus');
+const subtractOperator = document.querySelector('.subtract');
+const multiplyOperator = document.querySelector('.multiply');
+const divideOperator = document.querySelector('.divide');
+
+const equalOperator = document.querySelector('.equal');
+const decimal = document.querySelector('.decimal');
+
 const one = document.querySelector('.one');
 const two = document.querySelector('.two');
 const three = document.querySelector('.three');
@@ -13,22 +26,17 @@ const seven = document.querySelector('.seven');
 const eight = document.querySelector('.eight');
 const nine = document.querySelector('.nine');
 const zero = document.querySelector('.zero');
-const decimal = document.querySelector('.decimal');
-const addOperator = document.querySelector('.plus');
-const subtractOperator = document.querySelector('.subtract');
-const multiplyOperator = document.querySelector('.multiply');
-const divideOperator = document.querySelector('.divide');
-const equalOperator = document.querySelector('.equal');
-const buttons = document.querySelectorAll('.button');
 
-// Variables for the display function /**Delete button?*/
+// Variables for the display function
+
 let displayMemory = [];
-let numberString = "";
-let operatorStorage = "";
-let tempOperator = "";
-let screenStorage = "";
+let numberString = " ";
+let operatorStorage = " ";
+let tempOperator = " ";
+let screenStorage = " ";
 
 // Functions for add, subtract, multiply and divide
+
 function add(numberOne, numberTwo) {
     return numberOne + numberTwo;
 }
@@ -39,28 +47,33 @@ function multiply(numberOne, numberTwo) {
     return numberOne * numberTwo;
 }
 function divide(numberOne, numberTwo) {
-    return numberOne / numberTwo;
+    if (numberTwo === 0) { // This is the if else statement to alert when a user tries to divide something by 0
+        alert("You can not divide this number by 0!");
+        return
+    } else {
+        return numberOne / numberTwo;
+    }
 }
 
 // Created a switch function which then calls one of the above functions on the numbers.
-// This is used to make the numbers do an equation
+
 function operate(operator, numberOne, numberTwo) {
     switch (operator) {
         case "add":
             result = add(numberOne, numberTwo);
-            displayOutput(result); // Shows result on the screen
+            displayOutput(result); // Shows result of the operation above
             return result; 
         case "subtract":
-            result = subtract(numberOne, numberTwo);                              //* DO WE NEED BREAKS?
-            displayOutput(result); 
+            result = subtract(numberOne, numberTwo);                          
+            displayOutput(result); // Shows result of the operation above
             return result;
         case "multiply":
             result = multiply(numberOne, numberTwo);
-            displayOutput(result);
+            displayOutput(result); // Shows result of the operation above
             return result;            
         case "divide":
             result = divide(numberOne, numberTwo);
-            displayOutput(result);
+            displayOutput(result); // Shows result of the operation above
             return result;
         default:
             return 0;
@@ -68,35 +81,38 @@ function operate(operator, numberOne, numberTwo) {
 }
 
 // Created the functions that populate the display when the numbers are clicked
-// Outputs display numbers to the screen
+
+// Updates the display from the operate function
+
 function displayOutput(input) {    
-    screen.textContent = input; // Variable made, inputs text
+    screen.textContent = input; // Calling displayOutput function (Takes an input and updates the display with the input)
 }
- 
-function displayStorage(input) {
-    if (numberString == "" && input == 0) {
-        alert("don't start a number string with zero");
-    } else {
-        numberString = numberString + input;
-        displayOutput(numberString);
-    }
+
+// (Numbers at the bottom)
+function displayStorage(input) { // When I click a number or decimal it appends the value to the current numberString and display it to the screen
+    numberString = numberString + input;
+    displayOutput(numberString);
 };
 
+// Updates operatorStorage with an input
 function operatorDisplayStorage(input) {
-    operatorStorage = input;
+    operatorStorage = input; 
 }
- 
-// Breaks down string to numbers and stores in an array
+
+// Because the display is text it needs to be converted into numbers for the operator function to work.
+// Breaks down string to numbers and stores in an array (adds a number to the array)
 function displayTemp2Memory() {
-    let temp = parseFloat(numberString);
-    displayMemory.push(temp); // Pushes temp into an array
+    let temp = parseFloat(numberString); // Turns the string into a number
+    displayMemory.push(temp); // Pushes(adds) temp at the end of the array
  
-    screenStorage = screenStorage + numberString + " " + operatorStorage + " "; // stores old numberString into screenStorage
-    screenLog.textContent = screenStorage; // display running log;
-    numberString = ""; // empties numberString
+    screenStorage = screenStorage + numberString + " " + operatorStorage + " "; // Stores old numberString into screenStorage
+    screenLog.textContent = screenStorage; // Display running log;
+    numberString = " "; // Empties numberString
 };
 
 // Created statements for the buttons
+
+// Reset back to empty strings and arrays
 clear.addEventListener('click', function() {
     displayMemory = [];
     numberString = "";
@@ -108,24 +124,25 @@ clear.addEventListener('click', function() {
 deleteNum.addEventListener('click', function() {
     if(numberString.length === 1) {
         displayTemp = "";
-        screen.textContent = 0;
+        screen.textContent = 0; // Reset string
     } else if (numberString.length > 1) {
-        numberString = numberString.slice(0, numberString.length-1);
+        numberString = numberString.slice(0, numberString.length-1); // Resetting the string from the first character onwards except the last character
         displayOutput(numberString);
     }
 });
  
 addOperator.addEventListener('click', function() {
-    if(numberString == "") {
-        console.log("empty numString");
+    if(numberString == " ") {
+        console.log("empty numString"); // Checking if string is empty
     } else {
-        operatorDisplayStorage("+")
-        displayTemp2Memory(); // Push numberString into displayMemory array.
+        operatorDisplayStorage("+") // inputing the operator to the string(screen)
+        displayTemp2Memory(); // Push numberString into displayMemory array. 
  
+        // Checks the display memory to see if it has two numbers
         if(displayMemory.length === 2) {
             let multiResult = operate(tempOperator, displayMemory[0], displayMemory[1]);
             displayMemory = [];
-            displayMemory[0] = multiResult;   
+            displayMemory[0] = multiResult; // How to add multiple operands for example 1 + 3 + 6 etc...
         }
         tempOperator = "add";
     };
@@ -135,12 +152,14 @@ subtractOperator.addEventListener('click', function(){
     if(numberString == "") {
         console.log("empty numString");
     } else {    
-        operatorDisplayStorage("-")
+        operatorDisplayStorage("-") // inputing the operator to the string(screen)
         displayTemp2Memory();
+
+        // Checks the display memory to see if it has two numbers
         if (displayMemory.length === 2) {
             let multiResult = operate(tempOperator, displayMemory[0], displayMemory[1]);
             displayMemory = []; 
-            displayMemory[0] = multiResult;
+            displayMemory[0] = multiResult; // How to subtract multiple operands for example 1 + 3 + 6 etc...
         };     
         tempOperator = "subtract";
     };   
@@ -150,12 +169,14 @@ multiplyOperator.addEventListener('click', function(){
     if(numberString == "") {
         console.log("empty numString");
     } else {
-        operatorDisplayStorage("*")
+        operatorDisplayStorage("*") // inputing the operator to the string(screen)
         displayTemp2Memory();
+
+        // Checks the display memory to see if it has two numbers
         if (displayMemory.length === 2) {
             let multiResult = operate(tempOperator, displayMemory[0], displayMemory[1]);
             displayMemory = []; 
-            displayMemory[0] = multiResult;
+            displayMemory[0] = multiResult; // How to subtract multiple operands for example 1 + 3 + 6 etc...
         };     
         tempOperator = "multiply";
     };   
@@ -165,13 +186,9 @@ divideOperator.addEventListener('click', function(){
     if(numberString == "") {
         console.log("empty numString");
     } else {
-        operatorDisplayStorage("/")
+        operatorDisplayStorage("/") // inputing the operator to the string(screen)
         displayTemp2Memory();
-        if(displayMemory.length === 2 && displayMemory[1] === 0) {
-            screen.textContent = 0;
-            screenLog.textContent = "You cannot divide by 0. Press CLEAR.";
-            screenStorage = "";
-        } else if (displayMemory.length === 2) {
+        if (displayMemory.length === 2) {
             let multiResult = operate(tempOperator, displayMemory[0], displayMemory[1]);
             displayMemory = []; 
             displayMemory[0] = multiResult;
@@ -181,22 +198,19 @@ divideOperator.addEventListener('click', function(){
 });
  
 equalOperator.addEventListener('click', function() {    
-        if(displayMemory.length === 0 || displayMemory.length === 1 && numberString == "") {
-            console.log("You need either a full equation or a second term in the expression before equaling. Press CLEAR.")
-        } else {
-            operatorDisplayStorage("=");    
-            displayTemp2Memory(); // Push 2nd temp strings into displayMemory array.    
-            let result = operate(tempOperator, displayMemory[0], displayMemory[1]);
-            displayMemory = []; // clear memory
-            numberString = ""; // clear temp
-            tempOperator = ""; // clear operator
-            screenStorage = ""; // clear screen log
-        };         
+    operatorDisplayStorage("=");  // inputing the operator to the string(screen)   
+    displayTemp2Memory(); // Push 2nd temp strings into displayMemory array.    
+    let result = operate(tempOperator, displayMemory[0], displayMemory[1]);
+    displayMemory = []; // Clear memory
+    numberString = " "; // Clear temp
+    tempOperator = " "; // Clear operator
+    screenStorage = " "; // Clear screen log
+    // Without this if equals is pressed for a second time instead of NaN it is empty
 });
 
 decimal.addEventListener('click', function() {
-    if(!numberString.includes(".")) {
-        displayStorage(".");
+    if(!numberString.includes(".")) { // Stops the decimal being repeated in the numberString
+        displayStorage("."); // Displays the decimal on the screen
     };    
 });
 

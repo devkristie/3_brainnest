@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap');
 :root {
     --background: #FFF;
+    --header-one: 'Poppins', sans-serif;
     --calc-background: #FF0077;
     --calc-window-bg: #FF8ED8;
-    --button-background: #93FFF8;
+    --button-background: #d362ff;
+    --button-font: #FFF;
+    --screen-font: Arial, sans-serif;
 }
 * {
     margin: 0;
@@ -15,6 +19,10 @@ body {
 h1 {
     padding: 20px 0;
     text-align: center;
+    font-family: var(--header-one);
+}
+u {
+    color: var(--calc-background);
 }
 .container {
     margin-left: auto;
@@ -22,16 +30,28 @@ h1 {
     max-width: 540px;
     padding: 20px 0;
     background-color: var(--calc-background);
+    box-shadow:  5px 5px 30px #666;
+    border-radius: 10px;
 }
 .screen {
     text-align: right;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
-    width: 500px;
+    max-width: 500px;
     height: 100px;
     background-color: var(--calc-window-bg);   
-    font-weight: bold; 
+    font-weight: bold;
+    font-family: var(--screen-font);
+}
+.screenlog {
+    padding-top: 5px;
+    padding-right: 7px;
+}
+.main {
+    padding-right: 7px;
+    font-size: 3em;
+    overflow-x: hidden;
 }
 .button-container {
     padding-left: 10px;
@@ -46,11 +66,22 @@ button {
     background-color: var(--background);
     border: none;
     border-radius: 5px;
+    font-family: var(--screen-font);
+    font-size: 1.25em;
 }
 button:hover {
     background-color: var(--button-background);
+    outline: 2px solid #000;
+    color: var(--button-font);
+    font-weight: bold;
 }
 footer {
-    padding: 20px 0;
+    padding-top: 30px;
     text-align: center;
+    font-family: var(--screen-font);
+}
+@media only screen and (max-width: 340px) {
+    button {
+        font-size: 0.9em;
+    }
 }
