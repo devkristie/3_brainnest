@@ -51,7 +51,8 @@ u {
 .main {
     padding-right: 7px;
     font-size: 3em;
-    overflow-x: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .button-container {
     padding-left: 10px;
