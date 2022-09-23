@@ -62,15 +62,15 @@ function operate(operator, numberOne, numberTwo) {
         case "add":
             result = add(numberOne, numberTwo);
             displayOutput(result); // Shows result of the operation above
-            return result; 
+            return result;
         case "subtract":
-            result = subtract(numberOne, numberTwo);                          
+            result = subtract(numberOne, numberTwo);
             displayOutput(result); // Shows result of the operation above
             return result;
         case "multiply":
             result = multiply(numberOne, numberTwo);
             displayOutput(result); // Shows result of the operation above
-            return result;            
+            return result;
         case "divide":
             result = divide(numberOne, numberTwo);
             displayOutput(result); // Shows result of the operation above
@@ -84,7 +84,7 @@ function operate(operator, numberOne, numberTwo) {
 
 // Updates the display from the operate function
 
-function displayOutput(input) {    
+function displayOutput(input) {
     screen.textContent = input; // Calling displayOutput function (Takes an input and updates the display with the input)
 }
 
@@ -96,7 +96,7 @@ function displayStorage(input) { // When I click a number or decimal it appends 
 
 // Updates operatorStorage with an input
 function operatorDisplayStorage(input) {
-    operatorStorage = input; 
+    operatorStorage = input;
 }
 
 // Because the display is text it needs to be converted into numbers for the operator function to work.
@@ -104,7 +104,7 @@ function operatorDisplayStorage(input) {
 function displayTemp2Memory() {
     let temp = parseFloat(numberString); // Turns the string into a number
     displayMemory.push(temp); // Pushes(adds) temp at the end of the array
- 
+
     screenStorage = screenStorage + numberString + " " + operatorStorage + " "; // Stores old numberString into screenStorage
     screenLog.textContent = screenStorage; // Display running log;
     numberString = " "; // Empties numberString
@@ -113,33 +113,33 @@ function displayTemp2Memory() {
 // Created statements for the buttons
 
 // Reset back to empty strings and arrays
-clear.addEventListener('click', function() {
+clear.addEventListener('click', function () {
     displayMemory = [];
     numberString = "";
     screen.textContent = 0;
     screenLog.textContent = "0";
     screenStorage = "";
 });
- 
-deleteNum.addEventListener('click', function() {
-    if(numberString.length === 1) {
+
+deleteNum.addEventListener('click', function () {
+    if (numberString.length === 1) {
         displayTemp = "";
         screen.textContent = 0; // Reset string
     } else if (numberString.length > 1) {
-        numberString = numberString.slice(0, numberString.length-1); // Resetting the string from the first character onwards except the last character
+        numberString = numberString.slice(0, numberString.length - 1); // Resetting the string from the first character onwards except the last character
         displayOutput(numberString);
     }
 });
- 
-addOperator.addEventListener('click', function() {
-    if(numberString == " ") {
+
+addOperator.addEventListener('click', function () {
+    if (numberString == " ") {
         console.log("empty numString"); // Checking if string is empty
     } else {
         operatorDisplayStorage("+") // inputing the operator to the string(screen)
         displayTemp2Memory(); // Push numberString into displayMemory array. 
- 
+
         // Checks the display memory to see if it has two numbers
-        if(displayMemory.length === 2) {
+        if (displayMemory.length === 2) {
             let multiResult = operate(tempOperator, displayMemory[0], displayMemory[1]);
             displayMemory = [];
             displayMemory[0] = multiResult; // How to add multiple operands for example 1 + 3 + 6 etc...
@@ -148,25 +148,25 @@ addOperator.addEventListener('click', function() {
     };
 });
 
-subtractOperator.addEventListener('click', function(){
-    if(numberString == "") {
+subtractOperator.addEventListener('click', function () {
+    if (numberString == "") {
         console.log("empty numString");
-    } else {    
+    } else {
         operatorDisplayStorage("-") // inputing the operator to the string(screen)
         displayTemp2Memory();
 
         // Checks the display memory to see if it has two numbers
         if (displayMemory.length === 2) {
             let multiResult = operate(tempOperator, displayMemory[0], displayMemory[1]);
-            displayMemory = []; 
+            displayMemory = [];
             displayMemory[0] = multiResult; // How to subtract multiple operands for example 1 + 3 + 6 etc...
-        };     
+        };
         tempOperator = "subtract";
-    };   
+    };
 });
- 
-multiplyOperator.addEventListener('click', function(){
-    if(numberString == "") {
+
+multiplyOperator.addEventListener('click', function () {
+    if (numberString == "") {
         console.log("empty numString");
     } else {
         operatorDisplayStorage("*") // inputing the operator to the string(screen)
@@ -175,29 +175,29 @@ multiplyOperator.addEventListener('click', function(){
         // Checks the display memory to see if it has two numbers
         if (displayMemory.length === 2) {
             let multiResult = operate(tempOperator, displayMemory[0], displayMemory[1]);
-            displayMemory = []; 
+            displayMemory = [];
             displayMemory[0] = multiResult; // How to subtract multiple operands for example 1 + 3 + 6 etc...
-        };     
+        };
         tempOperator = "multiply";
-    };   
+    };
 });
- 
-divideOperator.addEventListener('click', function(){
-    if(numberString == "") {
+
+divideOperator.addEventListener('click', function () {
+    if (numberString == "") {
         console.log("empty numString");
     } else {
         operatorDisplayStorage("/") // inputing the operator to the string(screen)
         displayTemp2Memory();
         if (displayMemory.length === 2) {
             let multiResult = operate(tempOperator, displayMemory[0], displayMemory[1]);
-            displayMemory = []; 
+            displayMemory = [];
             displayMemory[0] = multiResult;
-        };     
+        };
         tempOperator = "divide";
-    };   
+    };
 });
- 
-equalOperator.addEventListener('click', function() {    
+
+equalOperator.addEventListener('click', function () {
     operatorDisplayStorage("=");  // inputing the operator to the string(screen)   
     displayTemp2Memory(); // Push 2nd temp strings into displayMemory array.    
     let result = operate(tempOperator, displayMemory[0], displayMemory[1]);
@@ -208,49 +208,49 @@ equalOperator.addEventListener('click', function() {
     // Without this if equals is pressed for a second time instead of NaN it is empty
 });
 
-decimal.addEventListener('click', function() {
-    if(!numberString.includes(".")) { // Stops the decimal being repeated in the numberString
+decimal.addEventListener('click', function () {
+    if (!numberString.includes(".")) { // Stops the decimal being repeated in the numberString
         displayStorage("."); // Displays the decimal on the screen
-    };    
+    };
 });
 
 // Add event listeners to the buttons
-one.addEventListener('click', function() {
+one.addEventListener('click', function () {
     displayStorage(1);
 });
- 
-two.addEventListener('click', function() {
+
+two.addEventListener('click', function () {
     displayStorage(2);
 });
- 
-three.addEventListener('click', function() {
+
+three.addEventListener('click', function () {
     displayStorage(3);
 });
- 
-four.addEventListener('click', function() {
+
+four.addEventListener('click', function () {
     displayStorage(4);
 });
- 
-five.addEventListener('click', function() {
+
+five.addEventListener('click', function () {
     displayStorage(5);
 });
- 
-six.addEventListener('click', function() {
+
+six.addEventListener('click', function () {
     displayStorage(6);
 });
- 
-seven.addEventListener('click', function() {
+
+seven.addEventListener('click', function () {
     displayStorage(7);
 });
- 
-eight.addEventListener('click', function() {
+
+eight.addEventListener('click', function () {
     displayStorage(8);
 });
- 
-nine.addEventListener('click', function() {
+
+nine.addEventListener('click', function () {
     displayStorage(9);
 });
- 
-zero.addEventListener('click', function() {
+
+zero.addEventListener('click', function () {
     displayStorage(0);
 });
